@@ -1,0 +1,41 @@
+#Permite ver el listado de todas las imágenes descargadas en la máquina 
+docker images
+
+#Descargar una versión específica de una imagen
+docker pull [imagen]:[version]
+
+#Descargar una versión específica en caso de fallo
+#no matching manifest for linux/arm64/v8 in the manifest list entries
+docker pull --platform linux/x86_64 [imagen]
+
+#Eliminar imagen descargada
+docker image rm [imagen]:[version]
+
+#crear contenedor
+docker create -p[puerto]:[puerto container] --name [nombre] [imagen]
+
+#arrancar contenedor
+docker start [nombre]
+
+#ver los containers ejecutándose
+docker ps
+
+#ver todos los containers en el sistema
+docker ps -a
+
+#detener contenedor
+docker stop [nombre]
+
+#ver los logs de un container
+docker logs [nombre]
+
+#seguir escuchando los logs
+docker logs --follow [nombre]
+
+#cmd run
+#busca imagen y si no la encuentra la descarga
+#crea un contenedor
+#inicia un contenedor
+#-d lo ejecuta de forma dettached
+#-e establece una variable de entorno (se realiza en docker create pero en principio debería funcionar también aquí)
+docker run -p[puerto]:[puerto container] --name [nombre] -e VARIABLE_ENTORNO=[nombre variable] -d [imagen]

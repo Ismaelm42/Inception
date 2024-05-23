@@ -1,0 +1,48 @@
+
+server
+{
+	#conexiones HTTPS en el puerto 443 para todas las direcciones IPv4.
+	listen 443 ssl;
+	#conexiones HTTPS en el puerto 443 para todas las direcciones IPv6.
+    listen [::]:443 ssl;
+	#protocolo utilizado
+	ssl_protocols TLSv1.3;
+	#ruta de los certificados
+	ssl_certificate /etc/ssl/certs/nginx.crt;
+	ssl_certificate_key /etc/nginx/ssl/private/nginx.key;
+
+	#ubicación donde se servirán los archivos.
+	#si una solicitud llegara para /index.html, Nginx buscará el archivo en /var/www/html
+	root /var/www/html;
+	#establece el nombre del servidor
+	server_name www.localhost localhost;
+	index index.php index.nginx-debian.html index.htm;
+
+	# este bloque  seaplica a cualquier archivo que cumpla con la expresión regular
+	# se aplica para cualquier archivo .php/ o .php y descarta cualquier archivo /.php
+    location ~ [^/]\.php(/|$)
+	{
+			#intenta servir el archivo especificado por la variable $uri y devuelve 404 si el archivo no existe
+            try_files $uri =404;
+			#define el servidor cgi al que se le aplica la solicitud
+			#fastcgi_pass wordpress:9000;
+			#incluye el archivo de congifuración de fastcgi por defecto
+			include fastcgi_params;
+			#define el SCRIPT_FILENAME
+			fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+	}
+}
+
+#nginx error log
+#2024/05/22 10:18:00 [error] 7#7: *1 directory index of "/var/www/html/" is forbidden, client: ::1, server: www.localhost, request: "GET / HTTP/1.1", host: "localhost"
+#para evitar este error, cambiar el nombre de index.html por index.nginx...
+#se puede acceder desde curl -k https://localhost
+
+#para conectarse a un contenedor por terminal:
+#docker exec -it [container] /bin/bash
+
+#otros comandos
+# docker ps -a
+# docker images
+# docker build -t [service] .
+# docker run -it --name [name] [container] [image]
