@@ -16,6 +16,7 @@ server
 	root /var/www/html;
 	#establece el nombre del servidor
 	server_name www.localhost localhost;
+	#index.nginx-debian.html mostrará el index por defecto de nginx
 	index index.php index.nginx-debian.html index.htm;
 
 	# este bloque  seaplica a cualquier archivo que cumpla con la expresión regular
@@ -24,7 +25,7 @@ server
 	{
 			#intenta servir el archivo especificado por la variable $uri y devuelve 404 si el archivo no existe
             try_files $uri =404;
-			#define el servidor cgi al que se le aplica la solicitud
+			#define el servidor cgi al que se le aplica la solicitud, decomentar cuando se instale wordpress para conectar los dos containers
 			#fastcgi_pass wordpress:9000;
 			#incluye el archivo de congifuración de fastcgi por defecto
 			include fastcgi_params;
@@ -33,9 +34,6 @@ server
 	}
 }
 
-#nginx error log
-#2024/05/22 10:18:00 [error] 7#7: *1 directory index of "/var/www/html/" is forbidden, client: ::1, server: www.localhost, request: "GET / HTTP/1.1", host: "localhost"
-#para evitar este error, cambiar el nombre de index.html por index.nginx...
 #se puede acceder desde curl -k https://localhost
 
 #para conectarse a un contenedor por terminal:
