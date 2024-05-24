@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:bullseye
 
 #instalación de curl para poder comprobar si el localhost se muestra correctamente en el container
 RUN apt update -y && apt install nginx -y && apt install openssl -y && apt install curl -y
