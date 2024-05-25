@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# creación de la carpeta para evitar error
+mkdir -p /run/mysqld/
+
+#inicio mysql
+mysql -e
+
 # inicia mysql en segundo plano
 service mysql start;
 
@@ -16,7 +22,7 @@ mysql -e "GRANT ALL PRIVILEGES ON \`${SQL_DATABASE}\`.* TO \`${SQL_USER}\`@'%' I
 mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';"
 
 # se reinician los privilegios de forma a que los cambios se hagan efectivos
-mysql -e "FLUSH PRIVILEGES;"
+mysql -e "FLUSH PRIVILEGES;"# mysql -e "FLUSH PRIVILEGES;"
 
 # se apaga mysql
 mysqladmin -u root -p$SQL_ROOT_PASSWORD shutdown
