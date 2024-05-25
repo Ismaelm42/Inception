@@ -6,7 +6,7 @@ server
 	#conexiones HTTPS en el puerto 443 para todas las direcciones IPv6.
     listen [::]:443 ssl;
 	#protocolo utilizado
-	ssl_protocols TLSv1.3;
+	ssl_protocols TLSv1.2 TLSv1.3;
 	#ruta de los certificados
 	ssl_certificate /etc/ssl/certs/nginx.crt;
 	ssl_certificate_key /etc/nginx/ssl/private/nginx.key;
