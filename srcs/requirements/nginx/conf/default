@@ -26,21 +26,10 @@ server
 			#intenta servir el archivo especificado por la variable $uri y devuelve 404 si el archivo no existe
             try_files $uri =404;
 			#define el servidor cgi al que se le aplica la solicitud, decomentar cuando se instale wordpress para conectar los dos containers
-			#fastcgi_pass wordpress:9000;
+			fastcgi_pass wordpress:9000;
 			#incluye el archivo de congifuración de fastcgi por defecto
 			include fastcgi_params;
 			#define el SCRIPT_FILENAME
 			fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
 	}
 }
-
-#se puede acceder desde curl -k https://localhost
-
-#para conectarse a un contenedor por terminal:
-#docker exec -it [container] /bin/bash
-
-#otros comandos
-# docker ps -a
-# docker images
-# docker build -t [service] .
-# docker run -it --name [name] [container] [image]
