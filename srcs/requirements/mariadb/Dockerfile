@@ -10,4 +10,4 @@ RUN chmod +x /mariadb_script.sh
 
 RUN /mariadb_script.sh
 
-CMD ["mysqld"]
+CMD ["mysqld_safe"]
