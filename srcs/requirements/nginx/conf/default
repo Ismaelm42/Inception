@@ -17,15 +17,15 @@ server
 	#establece el nombre del servidor
 	server_name www.localhost localhost;
 	#index.nginx-debian.html mostrará el index por defecto de nginx
-	index index.php index.nginx-debian.html index.htm;
+	index index.php index.html index.htm;
 
-	# este bloque  seaplica a cualquier archivo que cumpla con la expresión regular
+	# este bloque se aplica a cualquier archivo que cumpla con la expresión regular
 	# se aplica para cualquier archivo .php/ o .php y descarta cualquier archivo /.php
     location ~ [^/]\.php(/|$)
 	{
 			#intenta servir el archivo especificado por la variable $uri y devuelve 404 si el archivo no existe
             try_files $uri =404;
-			#define el servidor cgi al que se le aplica la solicitud, decomentar cuando se instale wordpress para conectar los dos containers
+			#define el servidor cgi al que se le aplica la solicitud
 			fastcgi_pass wordpress:9000;
 			#incluye el archivo de congifuración de fastcgi por defecto
 			include fastcgi_params;
