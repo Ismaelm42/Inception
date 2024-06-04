@@ -1,41 +1,26 @@
-#Permite ver el listado de todas las imágenes descargadas en la máquina 
-docker images
+docker build -t nginx /home/fwks/Documentos/Inception/srcs/requirements/nginx
+docker build -t mariadb /home/fwks/Documentos/Inception/srcs/requirements/mariadb
+docker build -t wordpress /home/fwks/Documentos/Inception/srcs/requirements/wordpress
 
-#Descargar una versión específica de una imagen
-docker pull [imagen]:[version]
+docker network create "inception"
 
-#Descargar una versión específica en caso de fallo
-#no matching manifest for linux/arm64/v8 in the manifest list entries
-docker pull --platform linux/x86_64 [imagen]
+docker run --name mariadb --network inception -d mariadb
+docker run --name wordpress --network inception -d wordpress
+docker run --name nginx --network inception -p 443:443 -d nginx
 
-#Eliminar imagen descargada
-docker image rm [imagen]:[version]
+(nginx se para si se lanza el primero ya que no encuentra wordpress)
 
-#crear contenedor
-docker create -p[puerto]:[puerto container] --name [nombre] [imagen]
+docker exec -it wordpress /bin/bash
 
-#arrancar contenedor
-docker start [nombre]
+apt install curl
 
-#ver los containers ejecutándose
-docker ps
+curl -k https://nginx:443
+Aparece la página de inicio de nginx.
 
-#ver todos los containers en el sistema
-docker ps -a
+curl -k https://localhost
+curl: (7) Failed to connect to localhost port 443: Connection refused
 
-#detener contenedor
-docker stop [nombre]
+Prácticamente todas las conexiones son rechazadas ¿?
 
-#ver los logs de un container
-docker logs [nombre]
 
-#seguir escuchando los logs
-docker logs --follow [nombre]
-
-#cmd run
-#busca imagen y si no la encuentra la descarga
-#crea un contenedor
-#inicia un contenedor
-#-d lo ejecuta de forma dettached
-#-e establece una variable de entorno (se realiza en docker create pero en principio debería funcionar también aquí)
-docker run -p[puerto]:[puerto container] --name [nombre] -e VARIABLE_ENTORNO=[nombre variable] -d [imagen]
+curl -v http://wordpress:9000/index.php

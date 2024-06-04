@@ -11,4 +11,6 @@ RUN /nginx_script.sh
 
 COPY ./conf/default /etc/nginx/sites-available/
 
+EXPOSE 443
+
 CMD ["nginx", "-g", "daemon off;"]
