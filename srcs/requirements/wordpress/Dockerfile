@@ -23,8 +23,8 @@ COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/
 
 COPY ./tools/wordpress_script.sh /
 
-RUN chmod +x /wordpress_script.sh && /wordpress_script.sh
+RUN chmod +x /wordpress_script.sh
 
 EXPOSE 9000
 
-CMD ["/usr/sbin/php-fpm7.4", "-F"]
+CMD ["/wordpress_script.sh"]

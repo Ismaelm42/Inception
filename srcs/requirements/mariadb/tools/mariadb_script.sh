@@ -22,3 +22,6 @@ mysql -u ${MYSQL_ROOT_USER} -p${MYSQL_ROOT_PASSWORD} -e "FLUSH PRIVILEGES;"
 
 # se apaga mysql
 mysqladmin -u ${MYSQL_ROOT_USER} -p${MYSQL_ROOT_PASSWORD} shutdown
+
+# se vuelve a iniciar mariadb
+mysqld_safe

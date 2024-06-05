@@ -8,8 +8,6 @@ COPY ./tools/mariadb_script.sh /
 
 RUN chmod +x /mariadb_script.sh
 
-RUN /mariadb_script.sh
-
 EXPOSE 3306
 
-CMD ["mysqld_safe"]
+CMD ["/mariadb_script.sh"]

@@ -1,0 +1,21 @@
+Attaching to mariadb, wordpress, nginx
+mariadb      | Starting MariaDB database server: mariadbd.
+mariadb      | ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+mariadb      | ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+mariadb      | ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+mariadb      | ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+wordpress    |   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+wordpress    |                                  Dload  Upload   Total   Spent    Left  Speed
+100 6831k  100 6831k    0     0  9144k      0 --:--:-- --:--:-- --:--:-- 9132k
+wordpress    | Downloading WordPress 6.5.3 (en_US)...
+mariadb      | ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+mariadb      | 240605 11:27:16 mysqld_safe Logging to syslog.
+mariadb      | 240605 11:27:16 mysqld_safe Starting mariadbd daemon with databases from /var/lib/mysql
+wordpress    | md5 hash verified: 91c754909e69c922cf7e1d2ddcf94311
+wordpress    | Success: WordPress downloaded.
+wordpress    | PHP Warning:  mysqli_real_connect(): php_network_getaddresses: getaddrinfo failed: Temporary failure in name resolution in phar:///usr/local/bin/wp/vendor/wp-cli/config-command/src/Config_Command.php on line 180
+wordpress    | Error: Database connection error (2002) php_network_getaddresses: getaddrinfo failed: Temporary failure in name resolution
+wordpress    | Error: 'wp-config.php' not found.
+wordpress    | Either create one manually or use `wp config create`.
+wordpress    | Error: 'wp-config.php' not found.
+wordpress    | Either create one manually or use `wp config create`.
