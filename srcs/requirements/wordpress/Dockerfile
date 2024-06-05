@@ -6,11 +6,13 @@ RUN apt update && apt install wget -y && apt install curl -y
 #instalación de php, extensión mysql para php y el cliente de mariadb
 RUN apt install php7.4 php-fpm php-mysql -y
 
-#creación de la carpeta var/www y descarga de la útlima versión de wordpress
-RUN mkdir -p /var/www/html && wget https://es.wordpress.org/wordpress-6.5.3-es_ES.tar.gz -O /var/www/html/wordpress.tar.gz 
+RUN mkdir -p /var/www/html
 
-#descompresión de wordpress y elimina el archivo .tar
-RUN tar -xvf /var/www/html/wordpress.tar.gz -C /var/www/html --strip-components=1 && rm -fr /var/www/html/wordpress.tar.gz
+WORKDIR /var/www/html
+
+RUN wget https://es.wordpress.org/wordpress-6.5.3-es_ES.tar.gz
+
+RUN tar -xvf wordpress-6.5.3-es_ES.tar.gz --strip-components=1 && rm -fr wordpress-6.5.3-es_ES.tar.gz
 
 #cambio de permisos y grupo de la carpeta /var/www/html
 RUN chown -R www-data:www-data /var/www/html/ && chmod -R 755 /var/www/html/ && mkdir -p /run/php/

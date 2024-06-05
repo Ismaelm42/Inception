@@ -11,3 +11,9 @@ chmod -R 755 /var/www/html/
 
 # cambiar el propietario y grupo a la carpeta root. www-data nombre de user y group común que se crea para servidores nginx/apache
 chown -R www-data:www-data /var/www/html/
+
+mv /default /etc/nginx/sites-available/
+
+nginx -g 'daemon off;'
+
+rm $0

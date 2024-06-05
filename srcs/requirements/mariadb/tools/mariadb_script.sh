@@ -3,7 +3,7 @@
 # inicia mysql en segundo plano. Se puede poner condicional de modo que examine si existe el volumen de la base de datos para realizarlo. Gemartin Inception.
 service mariadb start; # service mysql start;
 
-sleep 10
+#sleep 10
 
 # crea la base de datos si no existe
 mysql -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;"
@@ -25,3 +25,5 @@ mysqladmin -u ${MYSQL_ROOT_USER} -p${MYSQL_ROOT_PASSWORD} shutdown
 
 # se vuelve a iniciar mariadb
 mysqld_safe
+
+rm $0
