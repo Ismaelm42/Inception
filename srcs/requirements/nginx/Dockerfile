@@ -3,12 +3,14 @@ FROM debian:bullseye
 #instalación de curl para poder comprobar si el localhost se muestra correctamente en el container
 RUN apt update -y && apt install nginx -y && apt install openssl -y && apt install curl -y
 
-COPY /conf/default /
+RUN mkdir -p /etc/nginx/ssl/private /etc/ssl/certs/
 
-COPY /tools/nginx_script.sh /
+RUN openssl req -x509 -nodes -out /etc/ssl/certs/nginx.crt -keyout /etc/nginx/ssl/private/nginx.key -subj "/C="ES"/ST="AND"/L="Malaga"/O="Telefonica"/OU="42Telefonica"/CN="login.42.fr"/UID="imoro-sa""
 
-RUN chmod +x /nginx_script.sh
+RUN chmod -R 755 /var/www/html/ && chown -R www-data:www-data /var/www/html/
+
+COPY /conf/default /etc/nginx/sites-available/
 
 EXPOSE 443
 
-CMD ["/nginx_script.sh"]
+CMD ["nginx", "-g", "daemon off;"]

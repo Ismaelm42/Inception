@@ -10,5 +10,3 @@ if [ ! -f /var/www/html/wp-config.php ]; then
 fi
 
 /usr/sbin/php-fpm7.4 -F
-
-rm $0
