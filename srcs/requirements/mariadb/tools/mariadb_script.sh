@@ -1,12 +1,5 @@
 #!/bin/bash
 
-# MYSQL_HOSTNAME="mariadb-host"
-# MYSQL_DATABASE="mysql-db"
-# MYSQL_USER="imoro-sa"
-# MYSQL_PASSWORD="imoro-sa_1234"
-# MYSQL_ROOT_USER="root"
-# MYSQL_ROOT_PASSWORD="root_1234"
-
 # inicia mysql en segundo plano. Se puede poner condicional de modo que examine si existe el volumen de la base de datos para realizarlo. Gemartin Inception.
 service mariadb start; # service mysql start;
 

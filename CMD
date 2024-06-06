@@ -24,3 +24,6 @@ Prácticamente todas las conexiones son rechazadas ¿?
 
 
 curl -v http://wordpress:9000/index.php
+
+
+ejecutar el docker-compose con sudo sino da problemas de permisos (investigar)

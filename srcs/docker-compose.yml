@@ -8,8 +8,8 @@ services:
       - "443:443"
     networks:
       - inception
-    # volumes:
-    #   - wordpress_volume:/var/www/html/
+    volumes:
+      - wordpress_volume:/var/www/html/
     depends_on:
       - wordpress
     restart: always
@@ -21,8 +21,8 @@ services:
     container_name: mariadb
     networks:
       - inception
-    # volumes:
-    #   - mysql_volume:/var/lib/mysql
+    volumes:
+      - mysql_volume:/var/lib/mysql
     restart: always
 
   wordpress:
@@ -32,8 +32,8 @@ services:
     container_name: wordpress
     networks:
       - inception
-    # volumes:
-    #   - wordpress_volume:/var/www/html/
+    volumes:
+      - wordpress_volume:/var/www/html/
     depends_on:
       - mariadb
     restart: always
@@ -42,16 +42,16 @@ networks:
   inception:
     driver: bridge
 
-# volumes:
-#   mysql_volume:
-#     driver: local
-#     driver_opts:
-#       type: none
-#       o: bind
-#       device: /home/fwks/Documentos/Inception/volumes/mysql
-#   wordpress_volume:
-#     driver: local
-#     driver_opts:
-#       type: none
-#       o: bind
-#       device: /home/fwks/Documentos/Inception/volumes/wordpress
+volumes:
+  mysql_volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/fwks/Documentos/Inception/volumes/mysql
+  wordpress_volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/fwks/Documentos/Inception/volumes/wordpress
