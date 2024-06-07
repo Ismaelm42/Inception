@@ -48,10 +48,10 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/fwks/Documentos/Inception/volumes/mysql
+      device: ../volumes/mysql
   wordpress_volume:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/fwks/Documentos/Inception/volumes/wordpress
+      device: ../volumes/wordpress

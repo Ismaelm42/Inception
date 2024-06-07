@@ -15,7 +15,7 @@ server
 	#si una solicitud llegara para /index.html, Nginx buscará el archivo en /var/www/html
 	root /var/www/html;
 	#establece el nombre del servidor
-	server_name www.localhost localhost;
+	server_name imoro-sa.42.fr;
 	#index.nginx-debian.html mostrará el index por defecto de nginx
 	index index.php index.html index.htm;
 
