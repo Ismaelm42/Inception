@@ -1,27 +1,26 @@
 #!/bin/bash
 
-# inicia mysql en segundo plano. Se puede poner condicional de modo que examine si existe el volumen de la base de datos para realizarlo. Gemartin Inception.
-service mariadb start; # service mysql start;
+#Check if the database already exists
+if [ ! -f /var/lib/mysql/databases.txt ] || ! grep -qw "${MYSQL_DATABASE}" /var/lib/mysql/databases.txt; then
+	#Initiate MySQL in the background
+	service mariadb start; # service mysql start;
+	#Allow MySQL to fully initialize before executing further commands
+	sleep 10
+	#Create the database if it doesn't exist
+	mysql -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;"
+	#Create a user if it doesn't exist with the specified password
+	mysql -e "CREATE USER IF NOT EXISTS \`${MYSQL_USER}\`@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
+	#Grant all privileges of the new database to the created user
+	mysql -e "GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO \`${MYSQL_USER}\`@'%' IDENTIFIED BY '${MYSQL_PASSWORD}' WITH GRANT OPTION;"
+	#Modify the root user and set the password
+	mysql -e "ALTER USER '${MYSQL_ROOT_USER}'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';"
+	#Reload the privileges to make the changes effective
+	mysql -u ${MYSQL_ROOT_USER} -p${MYSQL_ROOT_PASSWORD} -e "FLUSH PRIVILEGES;"
+	#Create file with the database name
+	echo -e "${MYSQL_DATABASE}\n" >> /var/lib/mysql/databases.txt
+	#Shutdown MySQL
+	mysqladmin -u ${MYSQL_ROOT_USER} -p${MYSQL_ROOT_PASSWORD} shutdown
+fi
 
-sleep 10
-
-# crea la base de datos si no existe
-mysql -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;"
-
-# crea un usuario si no existe con su respectivo password
-mysql -e "CREATE USER IF NOT EXISTS \`${MYSQL_USER}\`@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
-
-# atribuye todos los privilegios de la nueva base de datos al usuario creado
-mysql -e "GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO \`${MYSQL_USER}\`@'%' IDENTIFIED BY '${MYSQL_PASSWORD}' WITH GRANT OPTION;"
-
-# modifica el usuario root y establece el password
-mysql -e "ALTER USER '${MYSQL_ROOT_USER}'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';"
-
-# se reinician los privilegios de forma a que los cambios se hagan efectivos
-mysql -u ${MYSQL_ROOT_USER} -p${MYSQL_ROOT_PASSWORD} -e "FLUSH PRIVILEGES;"
-
-# se apaga mysql
-mysqladmin -u ${MYSQL_ROOT_USER} -p${MYSQL_ROOT_PASSWORD} shutdown
-
-# se vuelve a iniciar mariadb
+#Initiate MySQL in the foreground
 mysqld_safe

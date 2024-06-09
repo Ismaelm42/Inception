@@ -4,7 +4,7 @@ RUN apt update && apt install curl -y
 
 RUN apt install php7.4 php-fpm php-mysql mariadb-client -y
 
-RUN mkdir -p /var/www/html /run/php/ /usr/sbin/sendmail && chown -R www-data:www-data /var/www/html/ && chmod -R 755 /var/www/html/
+RUN mkdir -p /var/www/html /run/php/ /usr/sbin/sendmail && chown -R www-data:www-data /var/www/html/ /usr/sbin/sendmail && chmod -R 755 /var/www/html/ && chmod +x /usr/sbin/sendmail
 
 COPY ./conf/php-fpm.conf /etc/php/7.4/fpm/
 

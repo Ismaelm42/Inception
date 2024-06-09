@@ -1,7 +1,6 @@
 FROM debian:bullseye
 
-#instalación de curl para poder comprobar si el localhost se muestra correctamente en el container
-RUN apt update -y && apt install nginx -y && apt install openssl -y && apt install curl -y
+RUN apt update -y && apt install nginx -y && apt install openssl -y
 
 RUN mkdir -p /etc/nginx/ssl/private /etc/ssl/certs/
 
