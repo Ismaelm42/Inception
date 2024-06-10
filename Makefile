@@ -1,23 +1,33 @@
+YML = ./srcs/docker-compose.yml
+
+VOL = ${HOME}/imoro-sa/
+
+VOL_MYSQL = ${VOL}data/mysql/
+
+VOL_WORDPRESS = ${VOL}data/wordpress/
+
 all: setup-volumes
-	@docker compose -f ./srcs/docker-compose.yml up -d
+	@docker compose -f ${YML} up -d
 
 setup-volumes:
-	@if [ ! -d ./volumes/mysql ]; then \
-		mkdir ./volumes/mysql && chmod -R 777 ./volumes/mysql; \
+	@if [ ! -d ${VOL_MYSQL} ]; then \
+		mkdir -p ${VOL_MYSQL} && chmod -R 777 ${VOL_MYSQL}; \
 	fi
-	@if [ ! -d ./volumes/wordpress ]; then \
-		mkdir ./volumes/wordpress && chmod -R 777 ./volumes/wordpress; \
+	@if [ ! -d ${VOL_WORDPRESS} ]; then \
+		mkdir -p ${VOL_WORDPRESS} && chmod -R 777 ${VOL_WORDPRESS}; \
 	fi
+
 down:
-	@docker compose -f ./srcs/docker-compose.yml down
+	@docker compose -f ${YML} down
 
 clean:
 	@docker system prune -af
 
-fclean:
-	@docker system prune -af
-	rm -rf ./volumes
+fclean: down clean
+	@docker volume rm $$(docker volume ls -q)
+	@sudo rm -rf ${VOL}
 
-re: down all
+re: down setup-volumes
+	@docker compose -f ${YML} up --build -d
 
-PHONY: all down clean fclean re 
+PHONY: all down clean fclean re

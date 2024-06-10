@@ -48,10 +48,10 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: ../volumes/mysql
+      device: /${HOME}/imoro-sa/data/mysql
   wordpress_volume:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: ../volumes/wordpress
+      device: /${HOME}/imoro-sa/data/wordpress

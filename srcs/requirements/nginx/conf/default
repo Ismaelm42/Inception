@@ -1,35 +1,33 @@
 
 server
 {
-	#conexiones HTTPS en el puerto 443 para todas las direcciones IPv4.
+	# HTTPS connections on port 443 for all IPv4 addresses.
 	listen 443 ssl;
-	#conexiones HTTPS en el puerto 443 para todas las direcciones IPv6.
+	# HTTPS connections on port 443 for all IPv6 addresses.
     listen [::]:443 ssl;
-	#protocolo utilizado
+	# Used protocol
 	ssl_protocols TLSv1.2 TLSv1.3;
-	#ruta de los certificados
+	# Certificates path
 	ssl_certificate /etc/ssl/certs/nginx.crt;
 	ssl_certificate_key /etc/nginx/ssl/private/nginx.key;
 
-	#ubicación donde se servirán los archivos.
-	#si una solicitud llegara para /index.html, Nginx buscará el archivo en /var/www/html
+	# Location where files will be served.
 	root /var/www/html;
-	#establece el nombre del servidor
+	# Set server name
 	server_name imoro-sa.42.fr;
-	#index.nginx-debian.html mostrará el index por defecto de nginx
+	# Default files
 	index index.php index.html index.htm;
 
-	# este bloque se aplica a cualquier archivo que cumpla con la expresión regular
-	# se aplica para cualquier archivo .php/ o .php y descarta cualquier archivo /.php
+	# This block applies to any file that matches the regular expression .php/ or .php file and disregards any /.php file
     location ~ [^/]\.php(/|$)
 	{
-			#intenta servir el archivo especificado por la variable $uri y devuelve 404 si el archivo no existe
+			# Try to serve the file specified by the $uri variable and return 404 if the file does not exist
             try_files $uri =404;
-			#define el servidor cgi al que se le aplica la solicitud
+			# Define the cgi server to which the request is applied
 			fastcgi_pass wordpress:9000;
-			#incluye el archivo de congifuración de fastcgi por defecto
+			# Include the default fastcgi configuration file
 			include fastcgi_params;
-			#define el SCRIPT_FILENAME
+			# Define SCRIPT_FILENAME
 			fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
 	}
 }
