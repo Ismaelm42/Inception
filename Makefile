@@ -1,10 +1,10 @@
 YML = ./srcs/docker-compose.yml
 
-VOL = ${HOME}/imoro-sa/
+VOL = ${HOME}/data
 
-VOL_MYSQL = ${VOL}data/mysql/
+VOL_MYSQL = ${VOL}/mysql/
 
-VOL_WORDPRESS = ${VOL}data/wordpress/
+VOL_WORDPRESS = ${VOL}/wordpress/
 
 all: setup-volumes
 	@docker compose -f ${YML} up -d
@@ -25,7 +25,9 @@ clean:
 
 fclean: down clean
 	@docker volume rm $$(docker volume ls -q)
-	@sudo rm -rf ${VOL}
+	@if [ -d ${VOL} ]; then \
+		sudo rm -rf ${VOL};
+	fi
 
 re: down setup-volumes
 	@docker compose -f ${YML} up --build -d
