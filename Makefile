@@ -26,7 +26,7 @@ clean:
 fclean: down clean
 	@docker volume rm $$(docker volume ls -q)
 	@if [ -d ${VOL} ]; then \
-		sudo rm -rf ${VOL};
+		sudo rm -rf ${VOL}; \
 	fi
 
 re: down setup-volumes
