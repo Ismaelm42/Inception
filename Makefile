@@ -24,7 +24,9 @@ clean:
 	@docker system prune -af
 
 fclean: down clean
-	@docker volume rm $$(docker volume ls -q)
+	@if [ "$$(docker volume ls -q)" ]; then \
+		docker volume rm $$(docker volume ls -q); \
+	fi
 	@if [ -d ${VOL} ]; then \
 		sudo rm -rf ${VOL}; \
 	fi
