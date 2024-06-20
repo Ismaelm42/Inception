@@ -4,8 +4,10 @@
 if [ ! -f /var/www/html/wp-config.php ]; then
 	# Download the core WordPress files
 	wp core download --allow-root
-	# Allow some time for the download to complete
-	sleep 15
+    # Check if WordPress is installed to continue
+	while ps aux | grep -q '[w]p core download'; do
+		sleep 3
+	done
 	# Create the WordPress configuration file with the provided database credentials
 	wp config create --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER --dbpass=$MYSQL_PASSWORD --dbhost=$MYSQL_HOSTNAME --allow-root
 	# Install WordPress with the specified site URL, title, and admin credentials

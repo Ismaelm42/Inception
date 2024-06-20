@@ -5,7 +5,9 @@ if [ ! -f /var/lib/mysql/databases.txt ] || ! grep -qw "${MYSQL_DATABASE}" /var/
 	# Initiate MySQL in the background
 	service mariadb start; # service mysql start;
 	# Allow MySQL to fully initialize before executing further commands
-	sleep 10
+	while ! mysqladmin ping --silent; do
+		sleep 3
+	done
 	# Create the database if it doesn't exist
 	mysql -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;"
 	# Create a user if it doesn't exist with the specified password
