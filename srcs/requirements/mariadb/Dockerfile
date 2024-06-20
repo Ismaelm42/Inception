@@ -1,6 +1,6 @@
 FROM debian:bullseye
 
-RUN apt update -y && apt install iputils-ping && apt install mariadb-server -y
+RUN apt update -y && apt install iputils-ping -y && apt install mariadb-server -y
 
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
 
